@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define ASCII_QUAN 256 //Quantity of characters in ascii table
+#define ASCII_QUAN 256  // Quantity of characters in ascii table
 
 char *cipher_caesar(char *string, int n) {
     unsigned int new_value = 0;
@@ -23,17 +23,29 @@ char *cipher_vignere(char *string, char *key) {
         key_idx = i % key_len;
         new_value = (unsigned int)(string[i] + key[key_idx]) % ASCII_QUAN;
         string[i] =  (char)new_value;
-    }
+        }
 
     return string;
 }
-
-
 
 void swap(unsigned char *string, unsigned int i, unsigned int j) {
     unsigned char aux = string[i];
     string[i] = string[j];
     string[j] = aux;
+}
+char *rc4_output(char *string, unsigned char *S, size_t string_len) {
+    unsigned int i = 0, j = 0;
+    unsigned int string_at_idx = 0;
+    
+    for (size_t idx = 0; idx < string_len; idx++) {
+        i = (i + 1) & (ASCII_QUAN-1);
+        string_at_idx = (unsigned int)S[i];
+        j = (j + string_at_idx) & (ASCII_QUAN-1);
+        swap(S, i, j);
+        string[idx] = (char)(S[(S[i] + S[j]) & (ASCII_QUAN-1)]) ^ string[idx];
+    }
+
+    return string;
 }
 
 
@@ -45,8 +57,7 @@ char *cipher_rc4(char *string, char *key) {
     for (unsigned int i = 0; i < ASCII_QUAN; i++) {
         S[i] =  (unsigned char)i;
     }
-    
-    // auxiliaries to cast easily
+    // auxiliary to cast easily
     unsigned int key_at_idx = 0;
     unsigned int string_at_idx = 0;
     for (unsigned int i = 0, j = 0; i < ASCII_QUAN; i++) {
@@ -54,18 +65,7 @@ char *cipher_rc4(char *string, char *key) {
         string_at_idx = (unsigned int)S[i];
         j = (j + string_at_idx + key_at_idx) & (ASCII_QUAN-1);
         swap(S, i, j);
-    } 
-
-    unsigned int i = 0, j = 0;
-    for (size_t idx = 0; idx < string_len; idx++) {
-        string_at_idx = (unsigned int)S[i];
-        i = (i + 1) & (ASCII_QUAN-1);
-        j = (j + string_at_idx) & (ASCII_QUAN-1);
-        swap(S, i, j);
-        string[idx] = (char)S[(S[i] + S[j]) & (ASCII_QUAN-1)] ^ string[idx];
     }
 
-
-    return string;
-
+    return rc4_output(string, S, string_len);
 }
