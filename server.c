@@ -11,7 +11,12 @@
 int server_create(struct server_t *self, const char *port) {
     self->port = port;
     self->skt = calloc(1, sizeof(socket_t));
+    if (self->skt == NULL) return ERROR_CODE;
     self->client_skt = calloc(1, sizeof(socket_t));
+    if (self->skt == NULL) {
+        free(self->skt);
+        return ERROR_CODE;
+    }
     socket_create(self->skt);
     socket_create(self->client_skt);
     return 0;
@@ -42,11 +47,10 @@ int server_close(struct server_t *self) {
     return socket_close(self->client_skt);  // FIXME
 }
 
-int server_destroy(struct server_t *self) {
+void server_destroy(struct server_t *self) {
     self->port = NULL;
     socket_destroy(self->skt);
     socket_destroy(self->client_skt);
     free(self->skt);
     free(self->client_skt);
-    return 0;
 }

@@ -4,9 +4,8 @@
 
 #define ERROR_CODE -1
 
-int socket_create(struct socket_t *self) {
+void socket_create(struct socket_t *self) {
     self->fd = -1;
-    return 0;
 }
 
 int socket_connect(struct socket_t *self, struct addrinfo *info) {
@@ -118,7 +117,6 @@ int socket_close(struct socket_t *self) {
     return 0;
 }
 
-int socket_destroy(struct socket_t *self) {
+void socket_destroy(struct socket_t *self) {
     self->fd = -1;
-    return 0;
 }

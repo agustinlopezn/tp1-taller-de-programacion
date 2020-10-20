@@ -14,7 +14,7 @@ typedef struct socket_t {
 struct addrinfo;
 
 // Creates the socket with its defaults values
-int socket_create(socket_t *self);
+void socket_create(socket_t *self);
 
 // Starts the socket, binds it and puts it in listen mode if the boolean
 // is_server is true, otherwise connects it to the address.
@@ -34,4 +34,4 @@ int socket_receive(struct socket_t *self,
 int socket_close(struct socket_t *self);
 
 // Destroys the socket information
-int socket_destroy(struct socket_t *self);
+void socket_destroy(struct socket_t *self);

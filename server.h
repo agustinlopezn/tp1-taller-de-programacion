@@ -1,6 +1,8 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include <stdlib.h>
+#include <string.h>
 #include "common_socket.h"
 
 typedef struct server_t {
@@ -24,6 +26,6 @@ int server_receive(struct server_t *self, unsigned char *buffer, size_t size);
 int server_close(struct server_t *self);
 
 // Destroys the sockets and puts the port back to NULL
-int server_destroy(struct server_t *self);
+void server_destroy(struct server_t *self);
 
 #endif // SERVER_H

@@ -1,10 +1,14 @@
 #define  _POSIX_C_SOURCE 200809L
+
 #include "client.h"
 #include "common_cipher.h"
-#include "common.h"
+#include "common_param_parser.h"
+#include "common_connection_util.h"
 #include "client_file_reader.h"
 
 #define BLOCK_SIZE 64
+#define ADDR_POS 1
+#define PORT_POS 2
 #define METHOD_POS 3
 #define KEY_POS 4
 #define DELIM "="
@@ -20,7 +24,7 @@ int main(int argc, char *argv[]) {
 
     file_reader_init(&file_reader, stdin);
     cipher_init(&cipher, method, (unsigned char*)key);
-    client_create(&client, argv[2], argv[1]);
+    client_create(&client, argv[PORT_POS], argv[ADDR_POS]);
     client_connect(&client);
 
     unsigned char buffer[BLOCK_SIZE];
@@ -36,5 +40,6 @@ int main(int argc, char *argv[]) {
     cipher_uninit(&cipher);
     client_close(&client);
     client_destroy(&client);
+
     return 0;
 }
