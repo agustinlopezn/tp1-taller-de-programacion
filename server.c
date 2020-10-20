@@ -1,8 +1,7 @@
 #define _POSIX_C_SOURCE 201112L  // Habilita getaddrinfo
-#include "common.h"
+
+#include "common_connection_util.h"
 #include "server.h"
-#include <stdlib.h>
-#include <string.h>
 
 #define ACCEPT_QUEUE_LEN 10
 #define SERVER_FLAG AI_PASSIVE
