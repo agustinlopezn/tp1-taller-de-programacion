@@ -24,10 +24,9 @@ int main(int argc, char *argv[]) {
     client_connect(&client);
 
     unsigned char buffer[BLOCK_SIZE];
-    size_t size;
 
     while (!file_reader_finished(&file_reader)) {
-        size = file_reader_read(&file_reader, buffer, BLOCK_SIZE);
+        size_t size = file_reader_read(&file_reader, buffer, BLOCK_SIZE);
         if (size < 1) break;
         cipher_encrypt(&cipher, (unsigned char*)buffer, size);
         client_send(&client, (unsigned char*)buffer, size);

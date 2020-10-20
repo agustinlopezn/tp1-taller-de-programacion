@@ -10,7 +10,7 @@
 int main(int argc, char *argv[]) {
     struct server_t server;
     struct cipher_t cipher;
-    unsigned char buffer[BLOCK_SIZE-1];
+    unsigned char buffer[BLOCK_SIZE];
     char *method, *key;
 
     parser_get_method(&method, argv[METHOD_POS], DELIM);
@@ -21,9 +21,9 @@ int main(int argc, char *argv[]) {
     server_connect(&server);
     server_accept(&server);
     memset(buffer, 0, BLOCK_SIZE);
-
-    while (server_receive(&server, buffer, BLOCK_SIZE-1) > 0) {
-        cipher_decrypt(&cipher, buffer, BLOCK_SIZE-1);
+    size_t size;
+    while (size = server_receive(&server, buffer, BLOCK_SIZE), size > 0) {
+        cipher_decrypt(&cipher, buffer, size);
         fprintf(stdout, "%s", buffer);
         memset(buffer, 0, BLOCK_SIZE);
     }

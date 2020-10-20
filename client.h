@@ -14,8 +14,7 @@ typedef struct client_t {
     const char *port;
 }client_t;
 
-int client_create(struct client_t *self,
-                  const char *address, const char *port);
+int client_create(struct client_t *self, const char *port, const char *address);
 
 int client_connect(struct client_t *self);
 

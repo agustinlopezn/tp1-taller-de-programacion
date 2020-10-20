@@ -79,7 +79,7 @@ int socket_send(struct socket_t *self, unsigned char *message, size_t msg_len) {
         }
         bytes_sent += actually_sent;
     }
-    return 1;
+    return bytes_sent;
 }
 
 int socket_accept(struct socket_t *host, struct socket_t *client) {
@@ -109,7 +109,7 @@ int socket_receive(struct socket_t *self,
         }
         bytes_received += actually_received;
     }
-    return 1;
+    return bytes_received;
 }
 
 int socket_close(struct socket_t *self) {
