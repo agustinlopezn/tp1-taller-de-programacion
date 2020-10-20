@@ -65,10 +65,10 @@ int socket_start(struct socket_t *self,
 }
 
 int socket_send(struct socket_t *self, unsigned char *message, size_t msg_len) {
-    size_t actually_sent, bytes_sent = 0;
+    size_t bytes_sent = 0;
 
     while (bytes_sent < msg_len) {
-        actually_sent = send(self->fd, &message[bytes_sent],
+        size_t actually_sent = send(self->fd, &message[bytes_sent],
                             msg_len - bytes_sent, MSG_NOSIGNAL);
 
         if (actually_sent == 0) {
@@ -96,10 +96,10 @@ int socket_accept(struct socket_t *host, struct socket_t *client) {
 
 int socket_receive(struct socket_t *self,
                     unsigned char *buffer, size_t buffer_size) {
-    size_t actually_received, bytes_received = 0;
+    size_t bytes_received = 0;
 
     while (bytes_received < buffer_size) {
-        actually_received = recv(self->fd, &buffer[bytes_received],
+        size_t actually_received = recv(self->fd, &buffer[bytes_received],
                                 buffer_size - bytes_received, 0);
         if (actually_received == -1) {
             fprintf(stderr, "Error in receive: %s\n", strerror(errno));

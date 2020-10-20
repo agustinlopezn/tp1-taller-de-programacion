@@ -61,7 +61,6 @@ void swap(unsigned char *string, unsigned int i, unsigned int j) {
 
 unsigned char *cipher_rc4(struct cipher_t *self,
                         unsigned char *string, size_t size) {
-
     for (size_t idx = 0; idx < size; idx++) {
         self->i = (self->i + 1) & (ASCII_QUAN-1);
         self->j = (self->j + self->S[self->i]) & (ASCII_QUAN-1);
