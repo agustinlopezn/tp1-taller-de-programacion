@@ -6,7 +6,7 @@
 #define ERROR_CODE -1
 
 int client_create(struct client_t *self,
-                const char *port, const char *address) {
+                  const char *port, const char *address) {
     self->address = address;
     self->port = port;
     self->skt = calloc(1, sizeof(socket_t));

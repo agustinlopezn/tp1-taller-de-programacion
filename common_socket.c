@@ -11,7 +11,7 @@ int socket_create(struct socket_t *self) {
 
 int socket_connect(struct socket_t *self, struct addrinfo *info) {
     struct addrinfo *addr;
-    int connection_status = 0;
+    int connection_status;
 
     for (addr = info; addr != NULL; addr = addr->ai_next) {
         self->fd = socket(addr->ai_family,
@@ -31,7 +31,7 @@ int socket_connect(struct socket_t *self, struct addrinfo *info) {
 
 int socket_bind_listen(struct socket_t *self, struct addrinfo *info) {
     struct addrinfo *addr;
-    int bind_status = 0;
+    int bind_status;
 
     for (addr = info; addr != NULL; addr = addr->ai_next) {
         self->fd = socket(addr->ai_family,
@@ -65,7 +65,7 @@ int socket_start(struct socket_t *self,
 }
 
 int socket_send(struct socket_t *self, unsigned char *message, size_t msg_len) {
-    size_t bytes_sent = 0, actually_sent = 0;
+    size_t actually_sent, bytes_sent = 0;
 
     while (bytes_sent < msg_len) {
         actually_sent = send(self->fd, &message[bytes_sent],
@@ -96,7 +96,7 @@ int socket_accept(struct socket_t *host, struct socket_t *client) {
 
 int socket_receive(struct socket_t *self,
                     unsigned char *buffer, size_t buffer_size) {
-    size_t bytes_received = 0, actually_received = 0;
+    size_t actually_received, bytes_received = 0;
 
     while (bytes_received < buffer_size) {
         actually_received = recv(self->fd, &buffer[bytes_received],

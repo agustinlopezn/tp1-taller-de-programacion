@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     client_connect(&client);
 
     unsigned char buffer[BLOCK_SIZE];
-    size_t size = 0;
+    size_t size;
 
     while (!file_reader_finished(&file_reader)) {
         size = file_reader_read(&file_reader, buffer, BLOCK_SIZE);

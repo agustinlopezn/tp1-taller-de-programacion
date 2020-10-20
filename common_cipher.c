@@ -29,7 +29,7 @@ unsigned char *cipher_encrypt(struct cipher_t *self,
 
 unsigned char *cipher_caesar(struct cipher_t *self,
                             unsigned char *string, size_t size) {
-    unsigned int new_value = 0;
+    unsigned int new_value;
     int n = atoi((char*)self->key);
 
     for (int i = 0; i < size; i++) {
@@ -43,7 +43,7 @@ unsigned char *cipher_caesar(struct cipher_t *self,
 unsigned char *cipher_vigenere(struct cipher_t *self,
                               unsigned char *string, size_t size) {
     size_t key_len = strlen((char*)self->key);
-    unsigned int new_value = 0;
+    unsigned int new_value;
 
     for (size_t i = 0; i < size; i++) {
         new_value = (unsigned int)(string[i] + self->key[self->idx%key_len]);
@@ -86,8 +86,8 @@ void init_cipher_rc4(struct cipher_t *self) {
     }
 
     // auxiliary to cast easily
-    unsigned int key_at_idx = 0;
-    unsigned int string_at_idx = 0;
+    unsigned int key_at_idx;
+    unsigned int string_at_idx;
     for (unsigned int i = 0, j = 0; i < ASCII_QUAN; i++) {
         key_at_idx = (unsigned int)self->key[i % key_len];
         string_at_idx = (unsigned int)self->S[i];
@@ -100,7 +100,7 @@ void init_cipher_rc4(struct cipher_t *self) {
 
 unsigned char *decipher_caesar(struct cipher_t *self,
                             unsigned char *string) {
-    unsigned int new_value = 0;
+    unsigned int new_value;
     int n = atoi((char*)self->key);
     size_t len = strlen((char*)string);
 
@@ -115,7 +115,7 @@ unsigned char *decipher_caesar(struct cipher_t *self,
 
 unsigned char *decipher_vigenere(struct cipher_t *self, unsigned char *string) {
     size_t key_len = strlen((char*)self->key);
-    unsigned int new_value = 0;
+    unsigned int new_value;
     size_t len = strlen((char*)string);
 
     for (size_t i = 0; i < len; i++) {
