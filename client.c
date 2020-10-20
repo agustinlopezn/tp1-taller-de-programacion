@@ -10,7 +10,7 @@ int client_create(struct client_t *self,
     self->address = address;
     self->port = port;
     self->skt = calloc(1, sizeof(socket_t));
-    if (self->skt) return ERROR_CODE;
+    if (!self->skt) return ERROR_CODE;
     socket_create(self->skt);
     return 1;
 }

@@ -10,9 +10,9 @@
 int server_create(struct server_t *self, const char *port) {
     self->port = port;
     self->skt = calloc(1, sizeof(socket_t));
-    if (self->skt == NULL) return ERROR_CODE;
+    if (!self->skt) return ERROR_CODE;
     self->client_skt = calloc(1, sizeof(socket_t));
-    if (self->skt == NULL) {
+    if (!self->skt) {
         free(self->skt);
         return ERROR_CODE;
     }
